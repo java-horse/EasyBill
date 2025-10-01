@@ -19,6 +19,32 @@ app.get('/', async (req, res) => {
     res.send('hello world');
 });
 
+// LLM识别账单
+app.post('/api/chat', async (req, res) => {
+    const { origin } = req.body;
+    if (!origin) {
+        return res.status(400).json({
+            success: false
+        });
+    }
+    try {
+        const llmService = LLMServiceFactory.getService('GLM');
+        const modelStartTime = Date.now();
+        const bill = await llmService.analyzeBillMessage(origin);
+        const modelEndTime = Date.now();
+        console.log(`大模型识别耗时: ${modelEndTime - modelStartTime}ms`);
+        res.json({
+            success: true,
+            data: bill
+        });
+    } catch (error) {
+        console.error('处理账单失败:', error);
+        res.status(500).json({
+            success: false
+        });
+    }
+});
+
 // LLM识别记账
 app.post('/api/bill', async (req, res) => {
     const { origin } = req.body;
