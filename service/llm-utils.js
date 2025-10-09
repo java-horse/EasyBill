@@ -3,7 +3,7 @@ function assembleBillPrompt(message) {
   文本：${message}
   请严格按照以下字段返回JSON格式数据，不要添加任何额外信息：
   {
-    "date": "yyyy-MM-dd HH:mm:ss", // 如果文本不包含日期，使用当前时间
+    "date": "yyyy-MM-dd HH:mm:ss", // 使用当前网络实时日期时间
     "amount": 数字, // 根据收入或支出显示正负数字
     "type": "支出"或"收入",
     "category": "账单分类",
@@ -13,7 +13,7 @@ function assembleBillPrompt(message) {
   }
   注意：
   1. 如果文本中有收入相关关键词，amount为正数；有支出相关关键词，amount为负数
-  2. 如果文本中没有具体日期，使用当前时间
+  2. 如果文本中没有具体日期，使用当前网络实时日期时间
   3. 请确保返回的是有效的JSON字符串，不要包含Markdown代码块标记`;
 }
 
